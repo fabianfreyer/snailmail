@@ -115,7 +115,7 @@ if __name__ == "__main__":
         print(mails[0])
         if input("Abort? [y/N] ").lower() == "y":
             sys.exit(0)
-    
+
     if username:
         password = getpass("Password: ")
 

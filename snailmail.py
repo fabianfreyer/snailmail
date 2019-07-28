@@ -12,6 +12,7 @@ from email.message import EmailMessage
 from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.header import Header
 from email.headerregistry import Address
 import mimetypes
 import ssl
@@ -55,7 +56,9 @@ def make_mail(sender, recipient, subject, body, attachments):
         part = MIMEBase(attachment["maintype"], attachment["subtype"])
         part.set_payload(c)
         part.add_header(
-            "Content-Disposition", f"attachment; filename={attachment['filename']}"
+            "Content-Disposition",
+            "attachment",
+            filename=Header(attachment["filename"], "utf-8").encode(),
         )
         encoders.encode_base64(part)
         msg.attach(part)

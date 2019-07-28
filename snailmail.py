@@ -115,9 +115,9 @@ if __name__ == "__main__":
         print(mails[0])
         if input("Abort? [y/N] ").lower() == "y":
             sys.exit(0)
-
-    username = args.username or input("Username: ")
-    password = getpass("Password: ")
+    
+    if username:
+        password = getpass("Password: ")
 
     context = ssl.SSLContext()
     with smtplib.SMTP(
@@ -129,7 +129,8 @@ if __name__ == "__main__":
         s.set_debuglevel(args.debug)
         s.starttls(context=context)
         s.ehlo()
-        s.login(user=username, password=password)
+        if username:
+            s.login(user=username, password=password)
 
         for msg in mails:
             print(f"Sending mail to {msg['To']}.", end=" ")
